@@ -78,11 +78,11 @@ public class UI {
                     switch (choose) {
                         case "ui": {
                             //insert
-                            displayTable.displaytTable( productWrite);
+                            displayTable.displaytTableNoId(productWrite);
                             break;
                         }
                         case "uu": {
-                            displayTable.displaytTable(productUpdate);
+                            displayTable.displaytTableUnSaveUpdate(productUpdate);
                         }
                         break;
 
