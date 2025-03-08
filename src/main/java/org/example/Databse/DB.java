@@ -1,4 +1,4 @@
-package org.example.uitl;
+package org.example.Databse;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

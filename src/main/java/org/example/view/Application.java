@@ -1,7 +1,5 @@
 package org.example.view;
 
-import org.example.uitl.DB;
-
 import java.sql.SQLException;
 
 public class Application {

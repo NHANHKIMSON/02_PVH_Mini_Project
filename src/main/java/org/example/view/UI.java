@@ -3,7 +3,7 @@ package org.example.view;
 import org.example.controller.ProductController;
 import org.example.helper.Menu;
 import org.example.model.entity.Product;
-import org.example.uitl.DB;
+import org.example.Databse.DB;
 import org.example.helper.Utils;
 import org.example.helper.displayTable;
 import org.example.helper.inputUtil;

@@ -1,7 +1,7 @@
 package org.example.model;
 
 import org.example.model.entity.Product;
-import org.example.uitl.DB;
+import org.example.Databse.DB;
 import org.example.helper.displayTable;
 import org.example.helper.inputUtil;
 
