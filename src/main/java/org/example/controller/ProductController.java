@@ -31,4 +31,7 @@ public class ProductController {
     public void DeleteProduct(int id) throws SQLException {
         productService.delete(id);
     }
+    public void readByName(String name) throws SQLException {
+        productService.readByName(name);
+    }
 }

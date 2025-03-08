@@ -232,6 +232,28 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
+    public void readByName(String name) throws SQLException {
+        List<Product> productByName = new ArrayList<>();
+        Connection con = DB.getConnection();
+        String searchByIdSql = "SELECT * FROM stock WHERE name = ?";
+        PreparedStatement pstmt = con.prepareStatement(searchByIdSql);
+        pstmt.setString(1, name);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            int pid = rs.getInt(1);
+            String namee = rs.getString(2);
+            double unit_price = rs.getDouble(3);
+            int qty = rs.getInt(4);
+            String import_date = rs.getString(5);
+            productByName.add(new Product(pid, namee, unit_price, qty, import_date));
+
+        }
+
+        displayTable.displaytTable(productByName);
+
+    }
+
+    @Override
     public void readById(int id) throws SQLException {
         List<Product> productById = new ArrayList<>();
         Connection con=DB.getConnection();
