@@ -31,6 +31,66 @@ public class ProductImpl implements ProductService {
         return products;
     }
 
+//    public List<Product> Save(List<Product> product) throws SQLException {
+//
+//        Connection con= DB.getConnection();
+//        Statement st=con.createStatement();
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println(" sa.save insert and su.Save Update)");
+//        scanner.nextLine();
+//        System.out.println("Choose option :");String option=scanner.nextLine();
+//        switch (option) {
+//            case "si":{
+//                PreparedStatement pt=con.prepareStatement("insert into stock values(?,?,?,?)");
+//                Iterator<Product> iterator = product.iterator(); // Use Iterator
+//                while (iterator.hasNext()) {
+//                    Product product1 = iterator.next();
+//                    pt.setString(1, product1.getName());
+//                    pt.setInt(2,product1.getUnit_price());
+//                    pt.setInt(3,product1.getQty());
+//                    pt.setString(4,product1.getImport_date());
+//                    pt.executeUpdate();
+//                    System.out.println("Insert Success");
+//                    System.out.println();
+//
+//                    iterator.remove(); // Safe way to remove elements
+//                }
+//
+//            }break;
+//            case "su":{
+//                PreparedStatement pt=con.prepareStatement("insert into stock values(?,?,?,?)");
+//                Iterator<Product> iterator = product.iterator();
+//                while (iterator.hasNext()) {
+//                    Product product1 = iterator.next();
+//                    pt.setString(1, product1.getName());
+//                    pt.setDouble(2,product1.getUnit_price());
+//                    pt.setInt(3,product1.getQty());
+//                    pt.setString(4,product1.getImport_date());
+//                    pt.executeUpdate();
+//                    iterator.remove();
+//                }
+//               break;
+//            }
+//        }
+//        return product;
+//    }
+
+    public void delete(int id) throws SQLException {
+        Connection con=DB.getConnection();
+        String deleteSQL = "DELETE FROM stock WHERE id=?";
+        try(PreparedStatement pt = con.prepareStatement(deleteSQL)) {
+            pt.setInt(1, id);
+            int result =  pt.executeUpdate();
+            if (result == 1) {
+                System.out.println("Delete Success");
+            }else {
+                System.out.println("Delete Fail");
+            }
+
+        }
+    }
+
+
     @Override
     public void Save(List<Product> product,String option) throws SQLException {
         Connection con = DB.getConnection();
@@ -115,24 +175,24 @@ public class ProductImpl implements ProductService {
                    idDatabase=idDB;
 
                    System.out.println("1.Name 2.Unit_price 3.qty 4.import_date");
-                 int option=input.qty("Choose option :");
+                   System.out.println("Choose option :");int option=scanner.nextInt();
                    switch (option) {
                        case 1:{
                             String newName = input.Inputname("Enter your name: ");
-                           double unit_price=rs.getInt(3);
+                           int unit_price=rs.getInt(3);
                            int qty=rs.getInt(4);
                            String import_date= rs.getString(5);
                            products.add(new Product(newName,unit_price,qty,import_date));
                        }break;
                        case 2:{
-                           double unit_price=input.inputPrice("Change Unit Price  to:  ");
+                           System.out.println("Change Unit Price  to:  ");int unit_price=scanner.nextInt();
                            String name=rs.getString(2);
                            int qty=rs.getInt(4);
                            String import_date=rs.getString(5);
                            products.add(new Product(name,unit_price,qty,import_date));
                        }break;
                        case 3:{
-                           int qty=input.qty("Change Qty to:  ");
+                           System.out.println("Change Qty to:  ");int qty=scanner.nextInt();
                            String name=rs.getString(2);
                            int unit_price=rs.getInt(3);
                            String import_date=rs.getString(5);
@@ -174,7 +234,7 @@ public class ProductImpl implements ProductService {
     @Override
     public void readById(int id) throws SQLException {
         List<Product> productById = new ArrayList<>();
-        Connection con = DB.getConnection();
+        Connection con=DB.getConnection();
         String searchByIdSql = "SELECT * FROM stock WHERE id = ?";
         PreparedStatement pstmt = con.prepareStatement(searchByIdSql);
         pstmt.setInt(1, id);
@@ -185,37 +245,12 @@ public class ProductImpl implements ProductService {
             double unit_price = rs.getDouble(3);
             int qty = rs.getInt(4);
             String import_date = rs.getString(5);
-            productById.add(new Product(pid, name, unit_price, qty, import_date));
+            productById.add(new Product(pid,name,unit_price,qty,import_date));
 
         }
+
 
         displayTable.displaytTable(productById);
 
-    }
-    @Override
-    public void readByName(String name) throws SQLException {
-        List<Product> productByName = new ArrayList<>();
-        Connection con = DB.getConnection();
-        String searchByIdSql = "SELECT * FROM stock WHERE name = ?";
-        PreparedStatement pstmt = con.prepareStatement(searchByIdSql);
-        pstmt.setString(1, name);
-        ResultSet rs = pstmt.executeQuery();
-        if (rs.next()) {
-            int pid = rs.getInt(1);
-            String namee = rs.getString(2);
-            double unit_price = rs.getDouble(3);
-            int qty = rs.getInt(4);
-            String import_date = rs.getString(5);
-            productByName.add(new Product(pid, namee, unit_price, qty, import_date));
-
         }
-
-        displayTable.displaytTable(productByName);
-
-    }
-
-
-
-
-
 }
